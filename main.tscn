@@ -1,3 +1,574 @@
-[gd_scene format=3 uid="uid://em64ykjujd1e"]
+[gd_scene load_steps=10 format=3 uid="uid://em64ykjujd1e"]
+[ext_resource type="Script" path="res://scripts/main.gd" id="1_main"]
+[ext_resource type="Script" path="res://scripts/build_system.gd" id="2_build_system"]
 
-[node name="Main" type="Node2D" unique_id=1904627446]
+[sub_resource type="StyleBoxFlat" id="HUDStyle"]
+bg_color = Color(0.105, 0.118, 0.145, 0.97)
+border_width_bottom = 2
+border_color = Color(0.91, 0.48, 0.2, 1)
+
+[sub_resource type="StyleBoxFlat" id="MoneyStyle"]
+bg_color = Color(0.145, 0.165, 0.19, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[sub_resource type="StyleBoxFlat" id="BuildStyle"]
+bg_color = Color(0.88, 0.43, 0.16, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[sub_resource type="StyleBoxFlat" id="BuildHoverStyle"]
+bg_color = Color(1, 0.56, 0.22, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[sub_resource type="StyleBoxFlat" id="OpenStyle"]
+bg_color = Color(0.24, 0.6, 0.34, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[sub_resource type="StyleBoxFlat" id="OpenHoverStyle"]
+bg_color = Color(0.31, 0.72, 0.42, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[sub_resource type="StyleBoxFlat" id="SignStyle"]
+bg_color = Color(0.76, 0.2, 0.12, 1)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(1, 0.68, 0.22, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+shadow_color = Color(0.12, 0.08, 0.07, 0.35)
+shadow_size = 4
+
+[node name="Main" type="Node2D"]
+script = ExtResource("1_main")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(640, 360)
+
+[node name="World" type="Node2D" parent="."]
+
+[node name="Ground" type="Polygon2D" parent="World"]
+polygon = PackedVector2Array(0, 0, 1280, 0, 1280, 720, 0, 720)
+color = Color(0.35, 0.55, 0.39, 1)
+
+[node name="GroundPattern" type="Line2D" parent="World"]
+points = PackedVector2Array(0, 84, 1280, 84, 1280, 116, 0, 116, 0, 684, 1280, 684)
+width = 2.0
+default_color = Color(0.25, 0.43, 0.3, 0.35)
+
+[node name="Walkway" type="Polygon2D" parent="World"]
+polygon = PackedVector2Array(120, 74, 1160, 74, 1160, 710, 120, 710)
+color = Color(0.72, 0.67, 0.57, 1)
+
+[node name="WalkwayInner" type="Polygon2D" parent="World"]
+polygon = PackedVector2Array(136, 90, 1144, 90, 1144, 694, 136, 694)
+color = Color(0.78, 0.73, 0.63, 1)
+
+[node name="BuildingShadow" type="Polygon2D" parent="World"]
+polygon = PackedVector2Array(190, 112, 1110, 112, 1110, 690, 190, 690)
+color = Color(0.12, 0.1, 0.1, 0.32)
+
+[node name="Shop" type="Node2D" parent="World"]
+
+[node name="DiningFloor" type="Polygon2D" parent="World/Shop"]
+polygon = PackedVector2Array(180, 100, 1100, 100, 1100, 674, 180, 674)
+color = Color(0.93, 0.78, 0.57, 1)
+
+[node name="FloorTilesHorizontal" type="Line2D" parent="World/Shop"]
+points = PackedVector2Array(204, 354, 1076, 354, 1076, 402, 204, 402, 204, 450, 1076, 450, 1076, 498, 204, 498, 204, 546, 1076, 546, 1076, 594, 204, 594, 204, 642, 1076, 642)
+width = 2.0
+default_color = Color(0.76, 0.56, 0.36, 0.28)
+
+[node name="FloorTilesVertical" type="Line2D" parent="World/Shop"]
+points = PackedVector2Array(252, 330, 252, 650, 300, 650, 300, 330, 348, 330, 348, 650, 396, 650, 396, 330, 444, 330, 444, 650, 492, 650, 492, 330, 540, 330, 540, 650, 588, 650, 588, 330, 636, 330, 636, 650, 684, 650, 684, 330, 732, 330, 732, 650, 780, 650, 780, 330, 828, 330, 828, 650, 876, 650, 876, 330, 924, 330, 924, 650, 972, 650, 972, 330, 1020, 330, 1020, 650)
+width = 2.0
+default_color = Color(0.76, 0.56, 0.36, 0.22)
+
+[node name="KitchenFloor" type="Polygon2D" parent="World/Shop"]
+polygon = PackedVector2Array(204, 124, 1076, 124, 1076, 306, 204, 306)
+color = Color(0.68, 0.75, 0.72, 1)
+
+[node name="KitchenTileLines" type="Line2D" parent="World/Shop"]
+points = PackedVector2Array(204, 184, 1076, 184, 1076, 244, 204, 244, 264, 244, 264, 124, 324, 124, 324, 306, 384, 306, 384, 124, 444, 124, 444, 306, 504, 306, 504, 124, 564, 124, 564, 306, 624, 306, 624, 124, 684, 124, 684, 306, 744, 306, 744, 124, 804, 124, 804, 306, 864, 306, 864, 124, 924, 124, 924, 306, 984, 306, 984, 124, 1044, 124, 1044, 306)
+width = 2.0
+default_color = Color(0.44, 0.55, 0.52, 0.25)
+
+[node name="KitchenLabel" type="Label" parent="World/Shop"]
+offset_left = 930.0
+offset_top = 132.0
+offset_right = 1058.0
+offset_bottom = 158.0
+theme_override_colors/font_color = Color(0.25, 0.34, 0.33, 0.7)
+theme_override_font_sizes/font_size = 14
+text = "COZINHA"
+horizontal_alignment = 2
+
+[node name="Appliances" type="Node2D" parent="World/Shop"]
+
+[node name="Refrigerator" type="Node2D" parent="World/Shop/Appliances"]
+position = Vector2(228, 142)
+
+[node name="Shadow" type="Polygon2D" parent="World/Shop/Appliances/Refrigerator"]
+polygon = PackedVector2Array(6, 6, 102, 6, 102, 126, 6, 126)
+color = Color(0.16, 0.2, 0.2, 0.28)
+
+[node name="Body" type="Polygon2D" parent="World/Shop/Appliances/Refrigerator"]
+polygon = PackedVector2Array(0, 0, 96, 0, 96, 120, 0, 120)
+color = Color(0.85, 0.92, 0.91, 1)
+
+[node name="Outline" type="Line2D" parent="World/Shop/Appliances/Refrigerator"]
+points = PackedVector2Array(0, 120, 0, 0, 96, 0, 96, 120, 0, 120)
+width = 4.0
+default_color = Color(0.25, 0.35, 0.36, 1)
+
+[node name="FreezerLine" type="Line2D" parent="World/Shop/Appliances/Refrigerator"]
+points = PackedVector2Array(2, 39, 94, 39)
+width = 3.0
+default_color = Color(0.46, 0.61, 0.61, 1)
+
+[node name="Handles" type="Line2D" parent="World/Shop/Appliances/Refrigerator"]
+points = PackedVector2Array(79, 12, 79, 31, 79, 52, 79, 84)
+width = 5.0
+default_color = Color(0.3, 0.4, 0.41, 1)
+
+[node name="Sink" type="Node2D" parent="World/Shop/Appliances"]
+position = Vector2(360, 154)
+
+[node name="Shadow" type="Polygon2D" parent="World/Shop/Appliances/Sink"]
+polygon = PackedVector2Array(5, 5, 137, 5, 137, 101, 5, 101)
+color = Color(0.16, 0.2, 0.2, 0.28)
+
+[node name="Counter" type="Polygon2D" parent="World/Shop/Appliances/Sink"]
+polygon = PackedVector2Array(0, 0, 132, 0, 132, 96, 0, 96)
+color = Color(0.78, 0.84, 0.82, 1)
+
+[node name="Outline" type="Line2D" parent="World/Shop/Appliances/Sink"]
+points = PackedVector2Array(0, 96, 0, 0, 132, 0, 132, 96, 0, 96)
+width = 4.0
+default_color = Color(0.29, 0.4, 0.4, 1)
+
+[node name="Basin" type="Polygon2D" parent="World/Shop/Appliances/Sink"]
+polygon = PackedVector2Array(22, 20, 110, 20, 110, 75, 22, 75)
+color = Color(0.38, 0.68, 0.73, 1)
+
+[node name="BasinInner" type="Polygon2D" parent="World/Shop/Appliances/Sink"]
+polygon = PackedVector2Array(30, 28, 102, 28, 102, 67, 30, 67)
+color = Color(0.66, 0.86, 0.87, 1)
+
+[node name="Faucet" type="Line2D" parent="World/Shop/Appliances/Sink"]
+points = PackedVector2Array(66, 13, 66, 35, 83, 35)
+width = 5.0
+default_color = Color(0.24, 0.35, 0.36, 1)
+
+[node name="Griddle" type="Node2D" parent="World/Shop/Appliances"]
+position = Vector2(530, 154)
+
+[node name="Shadow" type="Polygon2D" parent="World/Shop/Appliances/Griddle"]
+polygon = PackedVector2Array(5, 5, 169, 5, 169, 101, 5, 101)
+color = Color(0.16, 0.2, 0.2, 0.28)
+
+[node name="Body" type="Polygon2D" parent="World/Shop/Appliances/Griddle"]
+polygon = PackedVector2Array(0, 0, 164, 0, 164, 96, 0, 96)
+color = Color(0.35, 0.39, 0.4, 1)
+
+[node name="HotPlate" type="Polygon2D" parent="World/Shop/Appliances/Griddle"]
+polygon = PackedVector2Array(12, 12, 152, 12, 152, 69, 12, 69)
+color = Color(0.16, 0.18, 0.19, 1)
+
+[node name="GrillMarks" type="Line2D" parent="World/Shop/Appliances/Griddle"]
+points = PackedVector2Array(30, 20, 30, 61, 56, 61, 56, 20, 82, 20, 82, 61, 108, 61, 108, 20, 134, 20, 134, 61)
+width = 3.0
+default_color = Color(0.54, 0.29, 0.18, 1)
+
+[node name="Control1" type="Polygon2D" parent="World/Shop/Appliances/Griddle"]
+polygon = PackedVector2Array(24, 78, 35, 78, 35, 89, 24, 89)
+color = Color(0.96, 0.62, 0.2, 1)
+
+[node name="Control2" type="Polygon2D" parent="World/Shop/Appliances/Griddle"]
+polygon = PackedVector2Array(57, 78, 68, 78, 68, 89, 57, 89)
+color = Color(0.96, 0.62, 0.2, 1)
+
+[node name="Control3" type="Polygon2D" parent="World/Shop/Appliances/Griddle"]
+polygon = PackedVector2Array(90, 78, 101, 78, 101, 89, 90, 89)
+color = Color(0.96, 0.62, 0.2, 1)
+
+[node name="Control4" type="Polygon2D" parent="World/Shop/Appliances/Griddle"]
+polygon = PackedVector2Array(123, 78, 134, 78, 134, 89, 123, 89)
+color = Color(0.96, 0.62, 0.2, 1)
+
+[node name="PrepStation" type="Node2D" parent="World/Shop/Appliances"]
+position = Vector2(732, 154)
+
+[node name="Shadow" type="Polygon2D" parent="World/Shop/Appliances/PrepStation"]
+polygon = PackedVector2Array(5, 5, 325, 5, 325, 101, 5, 101)
+color = Color(0.16, 0.2, 0.2, 0.28)
+
+[node name="Body" type="Polygon2D" parent="World/Shop/Appliances/PrepStation"]
+polygon = PackedVector2Array(0, 0, 320, 0, 320, 96, 0, 96)
+color = Color(0.72, 0.78, 0.76, 1)
+
+[node name="Worktop" type="Polygon2D" parent="World/Shop/Appliances/PrepStation"]
+polygon = PackedVector2Array(8, 8, 312, 8, 312, 70, 8, 70)
+color = Color(0.86, 0.88, 0.82, 1)
+
+[node name="TomatoBin" type="Polygon2D" parent="World/Shop/Appliances/PrepStation"]
+polygon = PackedVector2Array(20, 22, 72, 22, 72, 56, 20, 56)
+color = Color(0.95, 0.47, 0.24, 1)
+
+[node name="LettuceBin" type="Polygon2D" parent="World/Shop/Appliances/PrepStation"]
+polygon = PackedVector2Array(84, 22, 136, 22, 136, 56, 84, 56)
+color = Color(0.52, 0.74, 0.33, 1)
+
+[node name="CheeseBin" type="Polygon2D" parent="World/Shop/Appliances/PrepStation"]
+polygon = PackedVector2Array(148, 22, 200, 22, 200, 56, 148, 56)
+color = Color(0.97, 0.72, 0.22, 1)
+
+[node name="OnionBin" type="Polygon2D" parent="World/Shop/Appliances/PrepStation"]
+polygon = PackedVector2Array(212, 22, 264, 22, 264, 56, 212, 56)
+color = Color(0.77, 0.61, 0.8, 1)
+
+[node name="IngredientHighlights" type="Line2D" parent="World/Shop/Appliances/PrepStation"]
+points = PackedVector2Array(26, 30, 65, 30, 90, 30, 129, 30, 154, 30, 193, 30, 218, 30, 257, 30)
+width = 5.0
+default_color = Color(0.52, 0.74, 0.33, 1)
+
+[node name="ServiceCounter" type="Node2D" parent="World/Shop"]
+position = Vector2(302, 282)
+
+[node name="Shadow" type="Polygon2D" parent="World/Shop/ServiceCounter"]
+polygon = PackedVector2Array(7, 8, 683, 8, 683, 76, 7, 76)
+color = Color(0.18, 0.12, 0.09, 0.3)
+
+[node name="Base" type="Polygon2D" parent="World/Shop/ServiceCounter"]
+polygon = PackedVector2Array(0, 0, 676, 0, 676, 68, 0, 68)
+color = Color(0.58, 0.3, 0.17, 1)
+
+[node name="Front" type="Polygon2D" parent="World/Shop/ServiceCounter"]
+polygon = PackedVector2Array(8, 20, 668, 20, 668, 60, 8, 60)
+color = Color(0.72, 0.4, 0.21, 1)
+
+[node name="Top" type="Polygon2D" parent="World/Shop/ServiceCounter"]
+polygon = PackedVector2Array(-8, -4, 684, -4, 684, 18, -8, 18)
+color = Color(1, 0.75, 0.35, 1)
+
+[node name="Register" type="Node2D" parent="World/Shop/ServiceCounter"]
+position = Vector2(510, -30)
+
+[node name="Body" type="Polygon2D" parent="World/Shop/ServiceCounter/Register"]
+polygon = PackedVector2Array(0, 0, 76, 0, 76, 42, 0, 42)
+color = Color(0.24, 0.28, 0.31, 1)
+
+[node name="Screen" type="Polygon2D" parent="World/Shop/ServiceCounter/Register"]
+polygon = PackedVector2Array(10, 7, 66, 7, 66, 28, 10, 28)
+color = Color(0.45, 0.8, 0.72, 1)
+
+[node name="DiningArea" type="Node2D" parent="World/Shop"]
+
+[node name="TableLeft" type="Node2D" parent="World/Shop/DiningArea"]
+position = Vector2(290, 432)
+
+[node name="Shadow" type="Polygon2D" parent="World/Shop/DiningArea/TableLeft"]
+polygon = PackedVector2Array(6, 7, 174, 7, 174, 91, 6, 91)
+color = Color(0.2, 0.13, 0.09, 0.25)
+
+[node name="Top" type="Polygon2D" parent="World/Shop/DiningArea/TableLeft"]
+polygon = PackedVector2Array(0, 0, 168, 0, 168, 84, 0, 84)
+color = Color(0.72, 0.4, 0.22, 1)
+
+[node name="Inset" type="Polygon2D" parent="World/Shop/DiningArea/TableLeft"]
+polygon = PackedVector2Array(8, 8, 160, 8, 160, 76, 8, 76)
+color = Color(0.82, 0.5, 0.27, 1)
+
+[node name="ChairTop" type="Polygon2D" parent="World/Shop/DiningArea/TableLeft"]
+polygon = PackedVector2Array(45, -38, 123, -38, 123, -10, 45, -10)
+color = Color(0.2, 0.35, 0.38, 1)
+
+[node name="ChairBottom" type="Polygon2D" parent="World/Shop/DiningArea/TableLeft"]
+polygon = PackedVector2Array(45, 94, 123, 94, 123, 122, 45, 122)
+color = Color(0.2, 0.35, 0.38, 1)
+
+[node name="TableCenter" type="Node2D" parent="World/Shop/DiningArea"]
+position = Vector2(556, 432)
+
+[node name="Shadow" type="Polygon2D" parent="World/Shop/DiningArea/TableCenter"]
+polygon = PackedVector2Array(6, 7, 174, 7, 174, 91, 6, 91)
+color = Color(0.2, 0.13, 0.09, 0.25)
+
+[node name="Top" type="Polygon2D" parent="World/Shop/DiningArea/TableCenter"]
+polygon = PackedVector2Array(0, 0, 168, 0, 168, 84, 0, 84)
+color = Color(0.72, 0.4, 0.22, 1)
+
+[node name="Inset" type="Polygon2D" parent="World/Shop/DiningArea/TableCenter"]
+polygon = PackedVector2Array(8, 8, 160, 8, 160, 76, 8, 76)
+color = Color(0.82, 0.5, 0.27, 1)
+
+[node name="ChairTop" type="Polygon2D" parent="World/Shop/DiningArea/TableCenter"]
+polygon = PackedVector2Array(45, -38, 123, -38, 123, -10, 45, -10)
+color = Color(0.2, 0.35, 0.38, 1)
+
+[node name="ChairBottom" type="Polygon2D" parent="World/Shop/DiningArea/TableCenter"]
+polygon = PackedVector2Array(45, 94, 123, 94, 123, 122, 45, 122)
+color = Color(0.2, 0.35, 0.38, 1)
+
+[node name="TableRight" type="Node2D" parent="World/Shop/DiningArea"]
+position = Vector2(822, 432)
+
+[node name="Shadow" type="Polygon2D" parent="World/Shop/DiningArea/TableRight"]
+polygon = PackedVector2Array(6, 7, 174, 7, 174, 91, 6, 91)
+color = Color(0.2, 0.13, 0.09, 0.25)
+
+[node name="Top" type="Polygon2D" parent="World/Shop/DiningArea/TableRight"]
+polygon = PackedVector2Array(0, 0, 168, 0, 168, 84, 0, 84)
+color = Color(0.72, 0.4, 0.22, 1)
+
+[node name="Inset" type="Polygon2D" parent="World/Shop/DiningArea/TableRight"]
+polygon = PackedVector2Array(8, 8, 160, 8, 160, 76, 8, 76)
+color = Color(0.82, 0.5, 0.27, 1)
+
+[node name="ChairTop" type="Polygon2D" parent="World/Shop/DiningArea/TableRight"]
+polygon = PackedVector2Array(45, -38, 123, -38, 123, -10, 45, -10)
+color = Color(0.2, 0.35, 0.38, 1)
+
+[node name="ChairBottom" type="Polygon2D" parent="World/Shop/DiningArea/TableRight"]
+polygon = PackedVector2Array(45, 94, 123, 94, 123, 122, 45, 122)
+color = Color(0.2, 0.35, 0.38, 1)
+
+[node name="Walls" type="Node2D" parent="World/Shop"]
+
+[node name="TopShadow" type="Polygon2D" parent="World/Shop/Walls"]
+polygon = PackedVector2Array(164, 84, 1116, 84, 1116, 132, 164, 132)
+color = Color(0.2, 0.11, 0.09, 0.35)
+
+[node name="Top" type="Polygon2D" parent="World/Shop/Walls"]
+polygon = PackedVector2Array(164, 76, 1116, 76, 1116, 124, 164, 124)
+color = Color(0.46, 0.2, 0.14, 1)
+
+[node name="TopHighlight" type="Polygon2D" parent="World/Shop/Walls"]
+polygon = PackedVector2Array(172, 84, 1108, 84, 1108, 94, 172, 94)
+color = Color(0.73, 0.34, 0.2, 1)
+
+[node name="Left" type="Polygon2D" parent="World/Shop/Walls"]
+polygon = PackedVector2Array(164, 76, 204, 76, 204, 682, 164, 682)
+color = Color(0.46, 0.2, 0.14, 1)
+
+[node name="Right" type="Polygon2D" parent="World/Shop/Walls"]
+polygon = PackedVector2Array(1076, 76, 1116, 76, 1116, 682, 1076, 682)
+color = Color(0.46, 0.2, 0.14, 1)
+
+[node name="BottomLeft" type="Polygon2D" parent="World/Shop/Walls"]
+polygon = PackedVector2Array(164, 650, 570, 650, 570, 682, 164, 682)
+color = Color(0.46, 0.2, 0.14, 1)
+
+[node name="BottomRight" type="Polygon2D" parent="World/Shop/Walls"]
+polygon = PackedVector2Array(710, 650, 1116, 650, 1116, 682, 710, 682)
+color = Color(0.46, 0.2, 0.14, 1)
+
+[node name="Entrance" type="Node2D" parent="World/Shop"]
+position = Vector2(570, 618)
+
+[node name="DoorShadow" type="Polygon2D" parent="World/Shop/Entrance"]
+polygon = PackedVector2Array(0, 8, 140, 8, 140, 66, 0, 66)
+color = Color(0.16, 0.14, 0.13, 0.25)
+
+[node name="GlassLeft" type="Polygon2D" parent="World/Shop/Entrance"]
+polygon = PackedVector2Array(0, 0, 66, 0, 66, 40, 0, 40)
+color = Color(0.46, 0.79, 0.83, 0.85)
+
+[node name="GlassRight" type="Polygon2D" parent="World/Shop/Entrance"]
+polygon = PackedVector2Array(74, 0, 140, 0, 140, 40, 74, 40)
+color = Color(0.46, 0.79, 0.83, 0.85)
+
+[node name="Frames" type="Line2D" parent="World/Shop/Entrance"]
+points = PackedVector2Array(0, 40, 0, 0, 66, 0, 66, 40, 74, 40, 74, 0, 140, 0, 140, 40)
+width = 4.0
+default_color = Color(0.16, 0.31, 0.34, 1)
+
+[node name="HandleLeft" type="Line2D" parent="World/Shop/Entrance"]
+points = PackedVector2Array(54, 10, 54, 29)
+width = 4.0
+default_color = Color(0.96, 0.78, 0.32, 1)
+
+[node name="HandleRight" type="Line2D" parent="World/Shop/Entrance"]
+points = PackedVector2Array(86, 10, 86, 29)
+width = 4.0
+default_color = Color(0.96, 0.78, 0.32, 1)
+
+[node name="WelcomeMat" type="Polygon2D" parent="World/Shop/Entrance"]
+polygon = PackedVector2Array(22, 45, 118, 45, 118, 72, 22, 72)
+color = Color(0.2, 0.35, 0.38, 1)
+
+[node name="StoreSign" type="PanelContainer" parent="World/Shop"]
+offset_left = 450.0
+offset_top = 66.0
+offset_right = 830.0
+offset_bottom = 116.0
+theme_override_styles/panel = SubResource("SignStyle")
+
+[node name="Label" type="Label" parent="World/Shop/StoreSign"]
+theme_override_colors/font_color = Color(1, 0.92, 0.7, 1)
+theme_override_font_sizes/font_size = 21
+text = "HAMBURGUERIA IMPÉRIO"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HUD" type="CanvasLayer" parent="."]
+
+[node name="TopBar" type="Panel" parent="HUD"]
+anchor_right = 1.0
+offset_bottom = 54.0
+theme_override_styles/panel = SubResource("HUDStyle")
+
+[node name="Title" type="Label" parent="HUD/TopBar"]
+offset_left = 20.0
+offset_top = 10.0
+offset_right = 320.0
+offset_bottom = 44.0
+theme_override_colors/font_color = Color(1, 0.9, 0.68, 1)
+theme_override_font_sizes/font_size = 20
+text = "IMPÉRIO DE FRANQUIAS"
+vertical_alignment = 1
+
+[node name="Money" type="PanelContainer" parent="HUD/TopBar"]
+offset_left = 620.0
+offset_top = 9.0
+offset_right = 790.0
+offset_bottom = 45.0
+theme_override_styles/panel = SubResource("MoneyStyle")
+
+[node name="Label" type="Label" parent="HUD/TopBar/Money"]
+theme_override_colors/font_color = Color(0.49, 0.91, 0.57, 1)
+theme_override_font_sizes/font_size = 18
+text = "R$ 10.000"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="BuildButton" type="Button" parent="HUD/TopBar"]
+offset_left = 840.0
+offset_top = 9.0
+offset_right = 1020.0
+offset_bottom = 45.0
+focus_mode = 0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 16
+theme_override_styles/normal = SubResource("BuildStyle")
+theme_override_styles/hover = SubResource("BuildHoverStyle")
+theme_override_styles/pressed = SubResource("BuildHoverStyle")
+text = "Construir"
+
+[node name="OpenStoreButton" type="Button" parent="HUD/TopBar"]
+offset_left = 1040.0
+offset_top = 9.0
+offset_right = 1260.0
+offset_bottom = 45.0
+focus_mode = 0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 16
+theme_override_styles/normal = SubResource("OpenStyle")
+theme_override_styles/hover = SubResource("OpenHoverStyle")
+theme_override_styles/pressed = SubResource("OpenHoverStyle")
+text = "Abrir Loja"
+
+[node name="BuildSystem" type="Node2D" parent="."]
+z_index = 10
+script = ExtResource("2_build_system")
+
+[node name="BuildPanel" type="Panel" parent="HUD"]
+visible = false
+offset_left = 934.0
+offset_top = 64.0
+offset_right = 1260.0
+offset_bottom = 342.0
+z_index = 5
+theme_override_styles/panel = SubResource("HUDStyle")
+
+[node name="Title" type="Label" parent="HUD/BuildPanel"]
+offset_left = 18.0
+offset_top = 14.0
+offset_right = 250.0
+offset_bottom = 43.0
+theme_override_colors/font_color = Color(1, 0.9, 0.68, 1)
+theme_override_font_sizes/font_size = 19
+text = "CONSTRUIR"
+
+[node name="CloseButton" type="Button" parent="HUD/BuildPanel"]
+offset_left = 278.0
+offset_top = 10.0
+offset_right = 314.0
+offset_bottom = 44.0
+focus_mode = 0
+text = "X"
+
+[node name="Description" type="Label" parent="HUD/BuildPanel"]
+offset_left = 18.0
+offset_top = 50.0
+offset_right = 308.0
+offset_bottom = 74.0
+theme_override_colors/font_color = Color(0.72, 0.76, 0.78, 1)
+theme_override_font_sizes/font_size = 13
+text = "Escolha um equipamento"
+
+[node name="GriddleButton" type="Button" parent="HUD/BuildPanel"]
+offset_left = 18.0
+offset_top = 88.0
+offset_right = 308.0
+offset_bottom = 134.0
+focus_mode = 0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 16
+theme_override_styles/normal = SubResource("MoneyStyle")
+theme_override_styles/hover = SubResource("BuildStyle")
+theme_override_styles/pressed = SubResource("BuildHoverStyle")
+
+[node name="RefrigeratorButton" type="Button" parent="HUD/BuildPanel"]
+offset_left = 18.0
+offset_top = 146.0
+offset_right = 308.0
+offset_bottom = 192.0
+focus_mode = 0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 16
+theme_override_styles/normal = SubResource("MoneyStyle")
+theme_override_styles/hover = SubResource("BuildStyle")
+theme_override_styles/pressed = SubResource("BuildHoverStyle")
+
+[node name="TableButton" type="Button" parent="HUD/BuildPanel"]
+offset_left = 18.0
+offset_top = 204.0
+offset_right = 308.0
+offset_bottom = 250.0
+focus_mode = 0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 16
+theme_override_styles/normal = SubResource("MoneyStyle")
+theme_override_styles/hover = SubResource("BuildStyle")
+theme_override_styles/pressed = SubResource("BuildHoverStyle")
+
+[node name="BuildHint" type="Label" parent="HUD"]
+visible = false
+offset_left = 320.0
+offset_top = 62.0
+offset_right = 960.0
+offset_bottom = 92.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0.08, 0.1, 0.12, 0.92)
+theme_override_constants/outline_size = 6
+theme_override_font_sizes/font_size = 16
+horizontal_alignment = 1
+vertical_alignment = 1
