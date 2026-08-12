@@ -23,6 +23,11 @@ func set_placement_valid(is_valid: bool) -> void:
 	modulate = Color(0.55, 1.0, 0.62, 0.72) if is_valid else Color(1.0, 0.38, 0.38, 0.72)
 
 
+func set_selected(selected: bool) -> void:
+	z_index = 12 if selected else 0
+	modulate = Color(1.18, 1.12, 0.72, 1.0) if selected else Color.WHITE
+
+
 func _draw() -> void:
 	var size := Vector2(footprint * GRID_SIZE)
 	var body_rect := Rect2(Vector2.ZERO, size)

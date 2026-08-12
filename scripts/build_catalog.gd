@@ -1,6 +1,8 @@
 class_name BuildCatalog
 extends RefCounted
 
+const SELL_REFUND_RATE := 0.70
+
 const ITEM_IDS: Array[StringName] = [
 	&"griddle",
 	&"refrigerator",
@@ -13,18 +15,21 @@ const ITEMS: Dictionary = {
 		"price": 800,
 		"footprint": Vector2i(3, 2),
 		"base_color": Color("4e5558"),
+		"allowed_zones": [&"kitchen"],
 	},
 	&"refrigerator": {
 		"display_name": "Geladeira",
 		"price": 1200,
 		"footprint": Vector2i(2, 3),
 		"base_color": Color("d7e9e7"),
+		"allowed_zones": [&"kitchen"],
 	},
 	&"table": {
 		"display_name": "Mesa",
 		"price": 300,
 		"footprint": Vector2i(3, 2),
 		"base_color": Color("b86638"),
+		"allowed_zones": [&"dining"],
 	},
 }
 

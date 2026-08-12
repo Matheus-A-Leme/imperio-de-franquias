@@ -21,3 +21,11 @@ func try_spend(amount: int) -> bool:
 	money -= amount
 	money_changed.emit(money)
 	return true
+
+
+func add_money(amount: int) -> bool:
+	if amount <= 0:
+		return false
+	money += amount
+	money_changed.emit(money)
+	return true
