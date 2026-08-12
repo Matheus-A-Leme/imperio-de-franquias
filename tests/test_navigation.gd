@@ -29,6 +29,7 @@ func _test_main_menu() -> void:
 	_expect(ProjectSettings.get_setting("application/run/main_scene") == "res://scenes/main_menu.tscn", "Projeto deve iniciar no menu principal")
 	root.add_child(menu)
 	await process_frame
+	_expect_concept_art(menu, "res://assets/references/ui/main_menu_concept_v01.png")
 	_expect(menu.get_node("MenuPanel/Buttons/ContinueButton").disabled, "Continuar deve permanecer desabilitado")
 	_expect(menu.has_node("MenuPanel/Buttons/ExitButton"), "Menu deve possuir botão Sair")
 	menu.queue_free()
@@ -39,6 +40,7 @@ func _test_new_game_and_gameplay() -> void:
 	var new_game = load("res://scenes/new_game_menu.tscn").instantiate()
 	root.add_child(new_game)
 	await process_frame
+	_expect_concept_art(new_game, "res://assets/references/ui/new_game_concept_v01.png")
 	var input: LineEdit = new_game.get_node("FormPanel/CompanyNameInput")
 	_expect(input.text == "Hamburgueria Império", "Novo Jogo deve usar nome padrão")
 	input.text = "Lanchonete do Leme"
@@ -61,6 +63,7 @@ func _test_pause_and_settings() -> void:
 	gameplay._unhandled_input(escape_event)
 	_expect(paused, "Abrir pause deve pausar a árvore")
 	_expect(pause_menu.visible, "Menu de pause deve ficar visível")
+	_expect_concept_art(pause_menu.get_node("Overlay"), "res://assets/references/ui/pause_menu_concept_v04.png")
 	pause_menu.continue_game()
 	_expect(not paused, "Continuar deve retomar o jogo")
 
@@ -69,6 +72,7 @@ func _test_pause_and_settings() -> void:
 	await process_frame
 	var settings = pause_menu.settings_overlay
 	_expect(settings != null, "Configurações devem abrir dentro do pause")
+	_expect_concept_art(settings, "res://assets/references/ui/settings_concept_v01.png")
 	settings._set_master_volume(35.0)
 	_expect(is_equal_approx(session.settings["master_volume"], 35.0), "Volume deve ser armazenado")
 	settings._set_fullscreen(true)
@@ -104,3 +108,11 @@ func _test_return_to_menu() -> void:
 func _expect(condition: bool, message: String) -> void:
 	if not condition:
 		failures.append(message)
+
+
+func _expect_concept_art(parent: Node, expected_path: String) -> void:
+	var concept_art := parent.get_node_or_null("ConceptArt") as TextureRect
+	_expect(concept_art != null, "Cena deve possuir a concept art em TextureRect")
+	if concept_art != null:
+		_expect(concept_art.texture != null and concept_art.texture.resource_path == expected_path, "Cena deve usar a concept art correta: %s" % expected_path)
+		_expect(concept_art.stretch_mode == TextureRect.STRETCH_KEEP_ASPECT_COVERED, "Concept art deve preservar proporção e cobrir a tela")

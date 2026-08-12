@@ -1,99 +1,154 @@
-[gd_scene load_steps=3 format=3]
+[gd_scene load_steps=6 format=3]
 
 [ext_resource type="Script" path="res://scripts/pause_menu.gd" id="1"]
+[ext_resource type="Texture2D" path="res://assets/references/ui/pause_menu_concept_v04.png" id="2"]
 
-[sub_resource type="StyleBoxFlat" id="Panel"]
-bg_color = Color(0.1, 0.12, 0.15, 0.98)
+[sub_resource type="StyleBoxEmpty" id="Empty"]
+
+[sub_resource type="StyleBoxFlat" id="Confirmation"]
+bg_color = Color(0.22, 0.12, 0.09, 0.98)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(0.52, 0.31, 0.20, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+shadow_color = Color(0.06, 0.03, 0.02, 0.65)
+shadow_size = 10
+
+[sub_resource type="StyleBoxFlat" id="ConfirmationButton"]
+bg_color = Color(0.82, 0.68, 0.50, 1)
 border_width_left = 3
 border_width_top = 3
 border_width_right = 3
 border_width_bottom = 3
-border_color = Color(0.9, 0.44, 0.17, 1)
-corner_radius_top_left = 10
-corner_radius_top_right = 10
-corner_radius_bottom_right = 10
-corner_radius_bottom_left = 10
+border_color = Color(0.25, 0.13, 0.09, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
 
 [node name="PauseMenu" type="CanvasLayer"]
 process_mode = 3
 script = ExtResource("1")
 
-[node name="Overlay" type="ColorRect" parent="."]
-offset_right = 1280.0
-offset_bottom = 720.0
-color = Color(0.025, 0.03, 0.04, 0.78)
+[node name="Overlay" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 
-[node name="PausePanel" type="Panel" parent="Overlay"]
-offset_left = 420.0
-offset_top = 134.0
-offset_right = 860.0
-offset_bottom = 590.0
-theme_override_styles/panel = SubResource("Panel")
+[node name="ConceptArt" type="TextureRect" parent="Overlay"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("2")
+expand_mode = 1
+stretch_mode = 6
 
-[node name="Title" type="Label" parent="Overlay/PausePanel"]
-offset_left = 30.0
-offset_top = 34.0
-offset_right = 410.0
-offset_bottom = 82.0
-theme_override_colors/font_color = Color(1, 0.87, 0.59, 1)
-theme_override_font_sizes/font_size = 30
-text = "JOGO PAUSADO"
-horizontal_alignment = 1
+[node name="PausePanel" type="Control" parent="Overlay"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
 
 [node name="ContinueButton" type="Button" parent="Overlay/PausePanel"]
-offset_left = 70.0
-offset_top = 130.0
-offset_right = 370.0
-offset_bottom = 188.0
-theme_override_font_sizes/font_size = 19
-text = "Continuar"
+layout_mode = 0
+offset_left = 471.0
+offset_top = 231.0
+offset_right = 810.0
+offset_bottom = 310.0
+mouse_default_cursor_shape = 2
+theme_override_styles/normal = SubResource("Empty")
+theme_override_styles/hover = SubResource("Empty")
+theme_override_styles/pressed = SubResource("Empty")
+theme_override_styles/focus = SubResource("Empty")
+flat = true
 
 [node name="SettingsButton" type="Button" parent="Overlay/PausePanel"]
-offset_left = 70.0
-offset_top = 216.0
-offset_right = 370.0
-offset_bottom = 274.0
-theme_override_font_sizes/font_size = 19
-text = "Configurações"
+layout_mode = 0
+offset_left = 471.0
+offset_top = 333.0
+offset_right = 810.0
+offset_bottom = 405.0
+mouse_default_cursor_shape = 2
+theme_override_styles/normal = SubResource("Empty")
+theme_override_styles/hover = SubResource("Empty")
+theme_override_styles/pressed = SubResource("Empty")
+theme_override_styles/focus = SubResource("Empty")
+flat = true
 
 [node name="MainMenuButton" type="Button" parent="Overlay/PausePanel"]
-offset_left = 70.0
-offset_top = 302.0
-offset_right = 370.0
-offset_bottom = 360.0
-theme_override_font_sizes/font_size = 19
-text = "Voltar ao Menu Principal"
+layout_mode = 0
+offset_left = 471.0
+offset_top = 435.0
+offset_right = 810.0
+offset_bottom = 506.0
+mouse_default_cursor_shape = 2
+theme_override_styles/normal = SubResource("Empty")
+theme_override_styles/hover = SubResource("Empty")
+theme_override_styles/pressed = SubResource("Empty")
+theme_override_styles/focus = SubResource("Empty")
+flat = true
 
 [node name="ConfirmationPanel" type="Panel" parent="Overlay"]
 visible = false
-offset_left = 350.0
-offset_top = 214.0
-offset_right = 930.0
-offset_bottom = 506.0
-theme_override_styles/panel = SubResource("Panel")
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -290.0
+offset_top = -146.0
+offset_right = 290.0
+offset_bottom = 146.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("Confirmation")
 
 [node name="Message" type="Label" parent="Overlay/ConfirmationPanel"]
+layout_mode = 0
 offset_left = 40.0
-offset_top = 50.0
+offset_top = 48.0
 offset_right = 540.0
 offset_bottom = 132.0
+theme_override_colors/font_color = Color(1, 0.88, 0.68, 1)
 theme_override_font_sizes/font_size = 20
 text = "Todo progresso não salvo será perdido.\nDeseja continuar?"
 horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="YesButton" type="Button" parent="Overlay/ConfirmationPanel"]
+layout_mode = 0
 offset_left = 100.0
 offset_top = 184.0
 offset_right = 270.0
 offset_bottom = 238.0
+theme_override_colors/font_color = Color(0.22, 0.11, 0.08, 1)
 theme_override_font_sizes/font_size = 18
+theme_override_styles/normal = SubResource("ConfirmationButton")
 text = "Sim"
 
 [node name="NoButton" type="Button" parent="Overlay/ConfirmationPanel"]
+layout_mode = 0
 offset_left = 310.0
 offset_top = 184.0
 offset_right = 480.0
 offset_bottom = 238.0
+theme_override_colors/font_color = Color(0.22, 0.11, 0.08, 1)
 theme_override_font_sizes/font_size = 18
+theme_override_styles/normal = SubResource("ConfirmationButton")
 text = "Não"
